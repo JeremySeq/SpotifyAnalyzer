@@ -5,7 +5,7 @@ from flask import Blueprint, send_from_directory, request, redirect
 frontend = Blueprint('frontend', __name__)
 
 frontend_dist_dir = os.path.join(os.path.dirname(
-    os.path.dirname(os.path.abspath(__file__))), 'frontend', 'dist')
+    os.path.dirname(os.path.abspath(__file__))), 'frontend', "spotify-project", 'dist')
 
 # Serve static files
 @frontend.route('/assets/<path:path>')

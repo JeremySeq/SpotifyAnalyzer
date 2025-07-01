@@ -1,5 +1,5 @@
 const CLIENT_ID     = "499bae4810ff41db826832dc66b2148e";
-const REDIRECT_URI  = "http://192.168.1.23:5173";
+const REDIRECT_URI  = window.location.origin;
 const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
 const RESPONSE_TYPE = "token";
 const SCOPES        = ["playlist-read-private"].join(" ");

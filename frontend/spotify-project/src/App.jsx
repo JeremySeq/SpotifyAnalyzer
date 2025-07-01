@@ -4,6 +4,16 @@ import API_SERVER from "./Constants.jsx";
 import SpotifyLogin from "./SpotifyLogin.jsx";
 import Analysis from "./Analysis.jsx";
 
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        const d = new Date();
+        d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+        expires = "; expires=" + d.toUTCString();
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+}
+
 export default function App() {
     const [token,   setToken]   = useState(null);
     const [input,   setInput]   = useState("");
@@ -11,6 +21,7 @@ export default function App() {
     const [loading, setLoading] = useState(false);
     const [error,   setError]   = useState("");
 
+    // get spotify token
     useEffect(() => {
         const hash = window.location.hash;
         if (hash) {
@@ -18,8 +29,13 @@ export default function App() {
             const accessToken = params.get("access_token");
             if (accessToken) {
                 setToken(accessToken);
-                window.history.replaceState(null, null, " ");
+                setCookie("spotify_token", accessToken, 1); // save for 1 day
+                window.history.replaceState(null, null, " "); // clean URL
             }
+        } else {
+            // Try to read token from cookie if no hash
+            const match = document.cookie.match(/(^|;) ?spotify_token=([^;]*)(;|$)/);
+            if (match) setToken(match[2]);
         }
     }, []);
 
