@@ -1,0 +1,133 @@
+.analysisWrapper {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+}
+
+.playlistHeader {
+
+}
+
+.playlistName {
+    color: var(--primary-light);
+    line-height: 1;
+    font-size: 32pt;
+    margin: 20px 0 10px 0;
+}
+
+.playlistHeader p {
+    color: var(--gray);
+    margin: 5px 0 20px;
+    line-height: 1;
+    font-size: 14pt;
+}
+
+.statBlock ul {
+    list-style: none;
+    margin: 0.25rem 0 0;
+    padding: 0;
+}
+
+.barChart {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 180px;
+    border-left: 1px solid #ccc;
+}
+
+.bar {
+    width: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.barFill {
+    width: 100%;
+    background: var(--primary-light);
+}
+
+.barLabel {
+    font-size: 0.7rem;
+    margin-top: 4px;
+}
+
+.statBlock h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1.1rem;
+    color: var(--white);
+}
+
+.statBlock {
+    position: relative;
+    background: hsla(0 0% 100% / 0.06);
+    border: 1px solid hsla(0 0% 100% / 0.08);
+    backdrop-filter: blur(14px);
+    padding: 1.25rem 1.35rem;
+    border-radius: 16px;
+    color: var(--light-gray);
+    transition: transform 200ms ease, box-shadow 200ms ease;
+    overflow: hidden;
+}
+
+
+.statBlock:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px -4px rgba(0 0 0 / 0.35);
+}
+
+.recharts-tooltip-label {
+    font-weight: bold;
+    color: var(--white);
+}
+
+.recharts-legend-item-text {
+    fill: var(--light-gray);
+}
+
+.statBlock .recharts-wrapper {
+    margin-top: 0.5rem;
+}
+
+
+.trackHeader {
+    font-size: 1.75rem;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-light);
+    font-weight: 600;
+}
+
+.trackList {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+.trackItem {
+    background-color: var(--light-bg);
+    color: var(--white);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: background-color 0.2s ease;
+}
+
+.trackItem:hover {
+
+}
+
+.trackItem strong {
+    font-size: 1.1rem;
+    color: var(--light-gray);
+}
+
+.trackItem em {
+    color: var(--gray);
+    font-style: normal;
+    font-size: 0.95rem;
+}
