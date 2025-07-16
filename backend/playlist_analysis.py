@@ -123,6 +123,7 @@ def analyze_playlist(playlist_id: str, access_token: str) -> dict:
 
     return {
         "playlist_name": playlist_name,
+        "playlist_id": playlist_id,
         "playlist_owner": playlist_owner,
         "analyzed_at": now.isoformat(),  # ISO 8601 timestamp of analysis time
         "tracks": tracks,

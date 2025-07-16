@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styles from "./Analysis.module.css";
 
 import { BarChart } from "@mui/x-charts/BarChart";
@@ -23,7 +23,40 @@ function formatDate(isoString) {
     });
 }
 
+
 export default function Analysis({ stats }) {
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = () => {
+        const analysisUrl = window.location.href;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(analysisUrl).then(() => {
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+            }).catch(() => {
+                alert("Failed to copy link.");
+            });
+        } else {
+            // fallback: older method using execCommand
+            try {
+                const textArea = document.createElement("textarea");
+                textArea.value = analysisUrl;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textArea);
+
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+            } catch {
+                alert("Your browser does not support copying to clipboard.");
+            }
+        }
+    };
+
+
+
     if (!stats) return null;
 
     const yearData = Object.entries(stats.year_distribution).map(([y, c]) => ({
@@ -53,9 +86,17 @@ export default function Analysis({ stats }) {
                 <p>analyzed on {formatDate(stats.analyzed_at)}</p>
             </header>
 
+            <div className={styles.linkButtons}>
+                <button onClick={handleCopy}>
+                    {copied ? "Link copied!" : "Share Analysis"}
+                </button>
+
+                <a href={`https://open.spotify.com/playlist/${stats.playlist_id}`} target="_blank">Open in Spotify</a>
+            </div>
+
             <div className={styles.analysisWrapper}>
                 <section className={styles.statBlock}>
-                    <h3>Overall</h3>
+                <h3>Overall</h3>
                     <p>
                         <strong>Total tracks:</strong> {stats.total_tracks}
                     </p>
