@@ -213,7 +213,8 @@ export default function Analysis({ stats }) {
                 {stats.tracks.map((track) => (
                     <li className={styles.trackItem} key={track.id}>
                         <div>
-                            <strong>{track.name}</strong>{" "}
+                            <strong>{track.name}</strong> {track.explicit ? <p className={styles.explicit}>E</p> : null}
+                            {" "}
                             <em>by {track.artists?.map(artist => artist.name).join(", ") || "Unknown"}</em>
                         </div>
                     </li>
