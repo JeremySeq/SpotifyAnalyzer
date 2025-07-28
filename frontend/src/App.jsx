@@ -1,44 +1,15 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import API_SERVER from "./Constants.jsx";
-import SpotifyLogin from "./SpotifyLogin.jsx";
 import Analysis from "./Analysis.jsx";
 
-function setCookie(name, value, days) {
-    let expires = "";
-    if (days) {
-        const d = new Date();
-        d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
-        expires = "; expires=" + d.toUTCString();
-    }
-    document.cookie = name + "=" + value + expires + "; path=/";
-}
-
 export default function App() {
-    const [token,   setToken]   = useState(null);
     const [input,   setInput]   = useState("");
     const [stats,   setStats]   = useState(null);
     const [loading, setLoading] = useState(false);
     const [error,   setError]   = useState("");
 
-    // get spotify token
-    useEffect(() => {
-        const hash = window.location.hash;
-        if (hash) {
-            const params = new URLSearchParams(hash.slice(1));
-            const accessToken = params.get("access_token");
-            if (accessToken) {
-                setToken(accessToken);
-                setCookie("spotify_token", accessToken, 1); // save for 1 day
-                window.history.replaceState(null, null, " "); // clean URL
-            }
-        } else {
-            // Try to read token from cookie if no hash
-            const match = document.cookie.match(/(^|;) ?spotify_token=([^;]*)(;|$)/);
-            if (match) setToken(match[2]);
-        }
-    }, []);
-
+    // fetch by analysis ID from URL
     useEffect(() => {
         const search = new URLSearchParams(window.location.search);
         const analysisId = search.get("analysis");
@@ -75,13 +46,12 @@ export default function App() {
         setError("");
         setStats(null);
         try {
-            // analysis
-            const res = await fetch(
-                `${API_SERVER}/api/playlist/${playlistId}`,
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            const res = await fetch(`${API_SERVER}/api/playlist/${playlistId}`);
+            if (!res.ok) {
+                const errData = await res.json();
+                throw new Error(errData.error || "Failed to fetch playlist analysis");
+            }
 
-            if (!res.ok) throw new Error("Failed to fetch playlist analysis");
             const data = await res.json();
             setStats(data);
             // set analysis id in url
@@ -100,7 +70,6 @@ export default function App() {
         e.preventDefault();
         const playlistId = parsePlaylistId(input.trim());
         if (!playlistId) return setError("Enter a playlist URL or ID");
-        if (!token)      return setError("You must log in with Spotify first");
         fetchPlaylistAnalysis(playlistId);
     };
 
@@ -108,7 +77,6 @@ export default function App() {
         <div className="container">
             <h1>Spotify Playlist Analyzer</h1>
 
-            {token ?
             <form onSubmit={onSubmit} className="form">
                 <input
                     className="input"
@@ -116,15 +84,12 @@ export default function App() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                 />
-                <button className="submit" type="submit">
-                    Analyze
-                </button>
-            </form> : <SpotifyLogin />}
+                <button className="submit" type="submit">Analyze</button>
+            </form>
 
             {loading && <p className="info">Fetching analysis…</p>}
             {error && <p className="info error">{error}</p>}
-
-            {stats && <Analysis stats={stats}/>}
+            {stats && <Analysis stats={stats} />}
         </div>
     );
 }

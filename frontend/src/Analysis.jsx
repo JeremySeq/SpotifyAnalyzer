@@ -8,7 +8,9 @@ const COLORS = ["#48b0ff", "#f8c550", "#ff7070", "#8b88ff", "#34d399"];
 
 const msToMinSec = (ms) => {
     const min = Math.floor(ms / 60000);
-    const sec = Math.floor((ms % 60000) / 1000).toString().padStart(2, "0");
+    const sec = Math.floor((ms % 60000) / 1000)
+        .toString()
+        .padStart(2, "0");
     return `${min}:${sec}`;
 };
 
@@ -96,7 +98,7 @@ export default function Analysis({ stats }) {
 
             <div className={styles.analysisWrapper}>
                 <section className={styles.statBlock}>
-                <h3>Overall</h3>
+                    <h3>Overall</h3>
                     <p>
                         <strong>Total tracks:</strong> {stats.total_tracks}
                     </p>
@@ -113,28 +115,28 @@ export default function Analysis({ stats }) {
                         series={[
                             {
                                 data: yearData.map((d) => d.count),
-                                color: "var(--primary)", // bars color
+                                color: "var(--primary)",
                             },
                         ]}
                         xAxis={[
                             {
                                 scaleType: "band",
                                 data: yearData.map((d) => d.year),
-                                tickLabelStyle: { fill: "var(--light-gray)" }, // x-axis labels
-                                lineStyle: { stroke: "var(--light-gray)" },    // x-axis line
+                                tickLabelStyle: { fill: "var(--light-gray)" },
+                                lineStyle: { stroke: "var(--light-gray)" },
                             },
                         ]}
                         yAxis={[
                             {
-                                tickLabelStyle: { fill: "var(--light-gray)" }, // y-axis labels
-                                lineStyle: { stroke: "var(--light-gray)" },    // y-axis line
+                                tickLabelStyle: { fill: "var(--light-gray)" },
+                                lineStyle: { stroke: "var(--light-gray)" },
                             },
                         ]}
                         slotProps={{ legend: { hidden: true } }}
                         sx={{
                             ".MuiChartsAxis-tickLabel": { fontSize: 11, fill: "var(--light-gray)" },
-                            ".MuiChartsAxis-line":      { stroke: "var(--light-gray)" },
-                            ".MuiChartsGrid-line":      { stroke: "var(--light-gray)", opacity: 0.1 },
+                            ".MuiChartsAxis-line": { stroke: "var(--light-gray)" },
+                            ".MuiChartsGrid-line": { stroke: "var(--light-gray)", opacity: 0.1 },
                         }}
                     />
 
@@ -156,8 +158,8 @@ export default function Analysis({ stats }) {
                         colors={COLORS}
                         legend={{ position: "bottom" }}
                         sx={{
-                            '& .MuiChartsLegend-root, & .MuiChartsTooltip-root': {
-                                color: 'var(--light-gray)', // legend and tooltip text
+                            "& .MuiChartsLegend-root, & .MuiChartsTooltip-root": {
+                                color: "var(--light-gray)",
                             },
                         }}
                     />
@@ -178,8 +180,8 @@ export default function Analysis({ stats }) {
                         colors={COLORS}
                         legend={{ position: "bottom" }}
                         sx={{
-                            '& .MuiChartsLegend-root, & .MuiChartsTooltip-root': {
-                                color: 'var(--light-gray)', // legend and tooltip text
+                            "& .MuiChartsLegend-root, & .MuiChartsTooltip-root": {
+                                color: "var(--light-gray)",
                             },
                         }}
                     />
