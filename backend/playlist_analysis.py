@@ -1,13 +1,16 @@
-import re
-from datetime import datetime
+import os
 from collections import Counter
+from datetime import datetime
 from functools import lru_cache
+
+from dotenv import load_dotenv
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyClientCredentials
 
 # Put your Spotify developer credentials here:
-CLIENT_ID = "499bae4810ff41db826832dc66b2148e"
-CLIENT_SECRET = "677e817a0b2046d4ac847c09c7458db3"
+load_dotenv()
+CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
+CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET')
 
 def fetch_playlist_info(playlist_id: str) -> dict:
     auth_manager = SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
