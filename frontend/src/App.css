@@ -20,6 +20,11 @@
     background-color: var(--primary-dark);
 }
 
+.hint {
+    text-align: center;
+    color: var(--gray);
+}
+
 .form {
     display: flex;
     gap: 0.75rem;

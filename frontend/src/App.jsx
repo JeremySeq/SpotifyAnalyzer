@@ -69,7 +69,7 @@ export default function App() {
     const onSubmit = (e) => {
         e.preventDefault();
         const playlistId = parsePlaylistId(input.trim());
-        if (!playlistId) return setError("Enter a playlist URL or ID");
+        if (!playlistId) return setError("Enter a playlist URL.");
         fetchPlaylistAnalysis(playlistId);
     };
 
@@ -80,12 +80,14 @@ export default function App() {
             <form onSubmit={onSubmit} className="form">
                 <input
                     className="input"
-                    placeholder="Paste Spotify playlist URL or ID"
+                    placeholder="Paste Spotify playlist URL"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                 />
                 <button className="submit" type="submit">Analyze</button>
             </form>
+
+            <p className="hint">Must be a public playlist.</p>
 
             {loading && <p className="info">Fetching analysis…</p>}
             {error && <p className="info error">{error}</p>}
